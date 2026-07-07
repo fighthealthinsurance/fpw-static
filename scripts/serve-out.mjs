@@ -1,14 +1,12 @@
-// Minimal static server for the exported site (out/), mirroring GitHub Pages
+// Minimal static server for the built site (dist/), mirroring GitHub Pages
 // semantics: directory index.html, 301 from slashless paths to the trailing-
 // slash form (query preserved), extensionless .html resolution, and the root
-// 404.html for unknown paths. Used for local smoke testing and Cypress e2e.
-// Zero dependencies and resilient to client connection resets, which crash
-// `serve` v14 mid-run.
+// 404.html for unknown paths. Zero dependencies; for local preview only.
 import { createServer } from "node:http";
-import { existsSync, statSync, createReadStream } from "node:fs";
+import { createReadStream, existsSync, statSync } from "node:fs";
 import { extname, join, normalize } from "node:path";
 
-const ROOT = new URL("../out", import.meta.url).pathname;
+const ROOT = new URL("../dist", import.meta.url).pathname;
 const PORT = Number(process.env.PORT || 3000);
 
 const CONTENT_TYPES = {
@@ -24,7 +22,6 @@ const CONTENT_TYPES = {
   ".jpeg": "image/jpeg",
   ".svg": "image/svg+xml",
   ".webmanifest": "application/manifest+json",
-  ".woff2": "font/woff2",
 };
 
 function send(res, status, filePath) {
@@ -56,7 +53,7 @@ const server = createServer((req, res) => {
   } else if (existsSync(fsPath) && statSync(fsPath).isFile()) {
     return send(res, 200, fsPath);
   } else if (existsSync(fsPath) && statSync(fsPath).isDirectory()) {
-    // GitHub Pages / nginx redirect slashless directory URLs, keeping the query.
+    // GitHub Pages redirects slashless directory URLs, keeping the query.
     res.writeHead(301, { Location: `${url.pathname}/${url.search}` }).end();
     return;
   } else if (existsSync(`${fsPath}.html`)) {
@@ -68,7 +65,7 @@ const server = createServer((req, res) => {
   res.writeHead(404).end("Not found");
 });
 
-// Browsers abort in-flight asset requests on navigation; never crash on that.
+// Browsers abort in-flight requests on navigation; never crash on that.
 server.on("clientError", (err, socket) => socket.destroy());
 server.on("connection", (socket) => socket.on("error", () => {}));
 

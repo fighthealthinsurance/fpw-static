@@ -1,9 +1,0 @@
-node_modules
-.next
-out
-coverage
-package-lock.json
-public
-LICENSE
-cypress/screenshots
-cypress/videos
