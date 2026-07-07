@@ -1,0 +1,16 @@
+node_modules
+.git
+.next
+out
+coverage
+cypress
+cypress.config.ts
+__tests__
+test-utils
+vitest.config.mts
+vitest.setup.ts
+.github
+Dockerfile
+.dockerignore
+*.log
+README.md
