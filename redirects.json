@@ -1,0 +1,138 @@
+{
+  "/schedule-demo": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/plans-pricing": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/learn-more": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/faq": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/resources": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/help": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/healthcare-platform": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/trial-chat": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/coming-soon": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/request-beta-access": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/denial_questions": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/auth/login": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/auth/provider-signup": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/auth/professional-signup": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/auth/professional-signup/account-details": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/auth/professional-signup/professional-information": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/auth/professional-signup/contact-information": {
+    "target": "https://www.fighthealthinsurance.com/pro_version",
+    "label": "Get started on Fight Health Insurance"
+  },
+  "/auth/patient-signup": {
+    "target": "https://www.fighthealthinsurance.com/",
+    "label": "Fight Health Insurance"
+  },
+  "/about-us": {
+    "target": "https://www.fighthealthinsurance.com/about-us",
+    "label": "About Fight Health Insurance"
+  },
+  "/contact": {
+    "target": "https://www.fighthealthinsurance.com/contact",
+    "label": "Contact Fight Health Insurance"
+  },
+  "/pharma-access": {
+    "target": "https://www.fighthealthinsurance.com/professionals/patient-access",
+    "label": "Patient & Market Access on Fight Health Insurance"
+  },
+  "/blog": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/ai-provider-burnout": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/first-post": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/gi-denials-coding": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/how-to-nail-medication-pa": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/imaging-request-pa": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/medical-note-vs-lmn": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/smarter-tools-for-pa": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/top-5-denial-codes": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/blog/why-pa-denied": {
+    "target": "https://www.fighthealthinsurance.com/blog/",
+    "label": "the Fight Health Insurance blog"
+  },
+  "/terms-of-service": {
+    "target": "https://www.fighthealthinsurance.com/tos",
+    "label": "the Terms of Service"
+  },
+  "/business-associate-agreement": {
+    "target": "https://www.fighthealthinsurance.com/tos",
+    "label": "the Terms of Service"
+  },
+  "/privacy-policy": {
+    "target": "https://www.fighthealthinsurance.com/privacy_policy",
+    "label": "the Privacy Policy"
+  }
+}

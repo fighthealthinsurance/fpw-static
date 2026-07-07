@@ -1,0 +1,16 @@
+{
+  "name": "fpw-static",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static redirect shell for fightpaperwork.com — sends patients and professionals to Fight Health Insurance.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test scripts/build.test.mjs",
+    "serve": "node scripts/serve-out.mjs"
+  }
+}
