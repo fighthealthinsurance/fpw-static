@@ -1,0 +1,60 @@
+{
+  "name": "fpw-static",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fight Paperwork static site: sends patients to Fight Health Insurance and posts interested professionals to the FHI API.",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "serve-out": "node scripts/serve-out.mjs",
+    "lint": "next lint --max-warnings 0",
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
+    "tsc": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "e2e": "start-server-and-test serve-out http://localhost:3000 cy:run",
+    "auto-fix": "next lint --fix && npm run format"
+  },
+  "dependencies": {
+    "@mantine/core": "^7.17.0",
+    "@mantine/form": "^7.17.0",
+    "@mantine/hooks": "^7.17.0",
+    "@mantine/notifications": "^7.17.0",
+    "@next/third-parties": "^15.2.2",
+    "@tabler/icons-react": "^3.28.1",
+    "next": "15.5.9",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.3.4",
+    "cypress": "^14.1.0",
+    "eslint": "^9.20.1",
+    "eslint-config-next": "15.5.9",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.5.2",
+    "postcss-preset-mantine": "^1.17.0",
+    "prettier": "^3.5.2",
+    "start-server-and-test": "^2.0.10",
+    "typescript": "^5.7.2",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.7"
+  }
+}
