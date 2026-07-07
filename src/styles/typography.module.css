@@ -1,0 +1,36 @@
+.typographyStyles :global(.pl-0) {
+  padding-inline-start: 0 !important;
+}
+
+.typographyStyles :global(.block) {
+  display: block;
+}
+
+.typographyStyles :global(.text-center) {
+  text-align: center;
+}
+
+.typographyStyles :global(a) {
+  color: var(--mantine-color-anchor);
+  text-decoration: none;
+}
+
+.typographyStyles :global(li) {
+  margin-bottom: 0.5em;
+}
+
+/* Nested ordered lists numbered 1. / 1.1. / 1.1.1. (Terms of Service) */
+.olCounterIncrement :global(ol) {
+  counter-reset: item;
+  margin-bottom: 0 !important;
+}
+
+.olCounterIncrement :global(ol > li) {
+  display: block;
+  position: relative;
+}
+
+.olCounterIncrement :global(ol > li)::before {
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+}
