@@ -65,16 +65,27 @@ of the same names.
 
 ### Legacy URLs
 
-| Old URL                        | Now                                  |
-| ------------------------------ | ------------------------------------ |
-| `/auth/professional-signup/**` | `/schedule-demo/` (query preserved)  |
-| `/auth/provider-signup`        | `/schedule-demo/` (query preserved)  |
-| `/auth/patient-signup`         | `https://fighthealthinsurance.com`   |
-| everything else retired        | custom 404 page routes patients/pros |
+| Old URL                        | Now                                            |
+| ------------------------------ | ---------------------------------------------- |
+| `/auth/professional-signup/**` | `/schedule-demo/` (query preserved)            |
+| `/auth/provider-signup`        | `/schedule-demo/` (query preserved)            |
+| `/auth/patient-signup`         | `https://fighthealthinsurance.com`             |
+| everything else retired        | `/schedule-demo/` (`source=404` when untagged) |
 
-On GitHub Pages the redirects are exported stub pages (client-side
-`location.replace`, noscript meta refresh fallback). The nginx image serves
-real 301s for the same paths (`nginx.conf`).
+GitHub Pages has no server-side redirects, so two client-side mechanisms do
+the work: known legacy paths are exported stub pages (client
+`location.replace`, noscript meta refresh fallback), and **everything else**
+hits the custom `404.html`, which is itself a catch-all redirect to the demo
+form — it preserves the query string and tags untagged traffic with
+`source=404` so these leads are attributable. Real exported pages always win
+over `404.html`, so the patient-signup stub still goes to Fight Health
+Insurance and `/schedule-demo/` can never loop. Note the catch-all responds
+with HTTP 404 status on Pages (a platform constraint) — retired URLs drop out
+of search indexes over time, which is the desired outcome.
+
+The nginx image does it properly server-side: real 301s for the known legacy
+paths and a real 302 catch-all (`return 302 /schedule-demo/...` with the same
+`source=404` tagging) for everything else.
 
 ## Testing
 

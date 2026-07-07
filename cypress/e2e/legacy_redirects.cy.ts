@@ -1,5 +1,6 @@
 // Legacy pro-app URLs must keep working on a dumb static host: the exported
-// stub pages redirect client-side, preserving ?source= attribution.
+// stub pages redirect client-side, preserving ?source= attribution, and the
+// 404 page is a catch-all funnel to the demo signup form.
 const professionalPaths = [
   "/auth/professional-signup/",
   "/auth/professional-signup/account-details/",
@@ -28,18 +29,16 @@ describe("legacy redirects", () => {
       });
   });
 
-  it("shows the routing 404 page for retired pro URLs", () => {
+  it("funnels any retired URL to the demo form with source=404", () => {
     cy.visit("/plans-pricing/", { failOnStatusCode: false });
-    cy.contains("This page has moved").should("be.visible");
-    cy.contains("a", "I'm a Patient").should(
-      "have.attr",
-      "href",
-      "https://fighthealthinsurance.com",
-    );
-    cy.contains("a", "I'm a Professional").should(
-      "have.attr",
-      "href",
-      "/schedule-demo/",
-    );
+    cy.location("pathname").should("eq", "/schedule-demo/");
+    cy.location("search").should("eq", "?source=404");
+    cy.contains("Get Started").should("be.visible");
+  });
+
+  it("keeps existing attribution when a retired URL is tagged", () => {
+    cy.visit("/blog/some-old-post/?source=email", { failOnStatusCode: false });
+    cy.location("pathname").should("eq", "/schedule-demo/");
+    cy.location("search").should("eq", "?source=email");
   });
 });

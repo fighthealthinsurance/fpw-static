@@ -1,74 +1,30 @@
-import {
-  Anchor,
-  Button,
-  Container,
-  Group,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
-import Link from "next/link";
 import { useEffect } from "react";
 
+import RedirectStub from "@/components/RedirectStub";
 import { trackEvent } from "@/lib/analytics";
-import { CONSUMER_SITE_URL, ROUTES, SUPPORT_EMAIL } from "@/lib/routes";
+import { ROUTES } from "@/lib/routes";
 
 // Catch-all for every URL from the retired pro app (dashboards, pricing,
-// blog, appeal flows, ...). Route patients to Fight Health Insurance and
-// professionals to the interest form.
+// blog, appeal flows, ...). GitHub Pages serves this page as 404.html for
+// any path that matches no file, and it forwards straight to the demo
+// signup form — untagged traffic is attributed with source=404. Known
+// legacy paths keep their own, more specific stubs (real exported files
+// always win over 404.html), e.g. /auth/patient-signup goes to Fight
+// Health Insurance instead.
 export default function NotFoundPage() {
   useEffect(() => {
+    // Best-effort: usually racing the redirect; the durable signal is the
+    // source=404 attribution on the demo form.
     trackEvent("page_view_404", {
       path: window.location.pathname,
     });
   }, []);
 
   return (
-    <Container size="sm" py={80}>
-      <Stack align="center" gap="lg">
-        <Title order={1} size="h2" fw={700} c="#5E5E5E" ta="center">
-          This page has moved
-        </Title>
-        <Text c="#626262" ta="center">
-          Fight Paperwork now works with partner platforms, and most of the old
-          site has been retired. Here&apos;s where to go instead:
-        </Text>
-
-        <Group gap="md" justify="center" wrap="wrap">
-          <Button
-            component="a"
-            href={CONSUMER_SITE_URL}
-            size="md"
-            variant="filled"
-            color="orange"
-            radius={8}
-          >
-            I&apos;m a Patient — Fight Health Insurance
-          </Button>
-          <Button
-            component={Link}
-            href={ROUTES.scheduleDemo}
-            size="md"
-            variant="outline"
-            color="orange"
-            radius={8}
-          >
-            I&apos;m a Professional — Get Started
-          </Button>
-        </Group>
-
-        <Text size="sm" c="dimmed" ta="center">
-          Looking for something else? Email us at{" "}
-          <Anchor
-            href={`mailto:${SUPPORT_EMAIL}`}
-            c="inherit"
-            underline="always"
-          >
-            {SUPPORT_EMAIL}
-          </Anchor>
-          .
-        </Text>
-      </Stack>
-    </Container>
+    <RedirectStub
+      target={ROUTES.scheduleDemo}
+      label="Get Started"
+      defaultSource="404"
+    />
   );
 }

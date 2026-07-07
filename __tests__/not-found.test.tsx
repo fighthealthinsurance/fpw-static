@@ -1,29 +1,43 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { render, screen } from "../test-utils";
 import NotFoundPage from "@/pages/404";
 
+// Swap the real stub (which navigates on mount) for a prop probe; the
+// redirect behavior itself is covered in redirect-stub.test.tsx and e2e.
+vi.mock("@/components/RedirectStub", () => ({
+  default: ({
+    target,
+    label,
+    defaultSource,
+  }: {
+    target: string;
+    label: string;
+    defaultSource?: string;
+  }) => (
+    <a
+      data-testid="redirect-stub"
+      href={target}
+      data-default-source={defaultSource}
+    >
+      {label}
+    </a>
+  ),
+}));
+
 describe("404 page", () => {
-  it("routes patients to Fight Health Insurance", () => {
+  it("funnels every retired URL to the demo signup form", () => {
     render(<NotFoundPage />);
-    expect(
-      screen.getByRole("link", { name: /i'm a patient/i }),
-    ).toHaveAttribute("href", "https://fighthealthinsurance.com");
+    const stub = screen.getByTestId("redirect-stub");
+    expect(stub).toHaveAttribute("href", "/schedule-demo/");
+    expect(stub).toHaveTextContent("Get Started");
   });
 
-  it("routes professionals to the demo request form", () => {
+  it("tags untagged traffic with source=404 for attribution", () => {
     render(<NotFoundPage />);
-    // next/link normalizes the trailing slash outside a real build; the
-    // exported site renders /schedule-demo/ (asserted exactly in Cypress).
-    expect(
-      screen.getByRole("link", { name: /i'm a professional/i }),
-    ).toHaveAttribute("href", expect.stringMatching(/^\/schedule-demo\/?$/));
-  });
-
-  it("offers the support email", () => {
-    render(<NotFoundPage />);
-    expect(
-      screen.getByRole("link", { name: /support42@fightpaperwork\.com/i }),
-    ).toHaveAttribute("href", "mailto:support42@fightpaperwork.com");
+    expect(screen.getByTestId("redirect-stub")).toHaveAttribute(
+      "data-default-source",
+      "404",
+    );
   });
 });
