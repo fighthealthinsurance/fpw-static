@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  # Lint, formatting, types, unit tests, and a production static export.
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run check-format
+      - run: npm run tsc
+      - run: npm run test
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-out
+          path: out
+          retention-days: 7
+
+  # Cypress against the static export served locally. No backend is involved:
+  # the bundle is built with an unresolvable API host (RFC 2606 .invalid) and
+  # every API call is stubbed with cy.intercept. CI must NEVER post to the
+  # real API — a real demo_request emails the team and the connector partner.
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      API_HOST: "https://api-stub.fightpaperwork.invalid"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm run serve-out
+          wait-on: "http://localhost:3000"
+          browser: chrome
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+
+  # The image must build; it is only pushed by the deploy workflow.
+  docker-build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
