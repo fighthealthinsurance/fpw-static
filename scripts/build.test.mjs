@@ -64,15 +64,17 @@ test("the landing page links patients to FHI", () => {
 
 test("the professional interest form does a classic POST to the FHI intake", () => {
   const html = readFileSync(join(DIST, "index.html"), "utf8");
-  // Classic form submission (no JS/fetch) straight to the FHI view.
-  assert.ok(
-    html.includes('method="post"'),
+  // Classic form submission (no JS/fetch) straight to the FHI view. Match the
+  // attributes case-insensitively and tolerate single/double quotes so the
+  // test asserts behavior, not a specific markup style.
+  assert.match(
+    html,
+    /method\s*=\s*["']post["']/i,
     "form uses a classic POST submission",
   );
-  assert.ok(
-    html.includes(
-      'action="https://www.fighthealthinsurance.com/pro_version_signup"',
-    ),
+  assert.match(
+    html,
+    /action\s*=\s*["']https:\/\/www\.fighthealthinsurance\.com\/pro_version_signup["']/i,
     "form posts to the FHI interested-professional intake",
   );
   // Field names must match the Django form (InterestedProfessional fields).

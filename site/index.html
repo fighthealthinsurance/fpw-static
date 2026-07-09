@@ -77,6 +77,9 @@
         font-weight: 600;
         text-decoration: none;
         border: none;
+        /* Form controls (the submit <button>) don't inherit font-family in
+           every browser, so set it explicitly to match the anchor buttons. */
+        font-family: inherit;
         font-size: 1rem;
         cursor: pointer;
       }
