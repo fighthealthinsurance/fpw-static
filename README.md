@@ -5,8 +5,11 @@ Pages. Fight Paperwork is connector-only now: patients and professionals both
 live on [Fight Health Insurance](https://www.fighthealthinsurance.com), so
 this site is just:
 
-- **`/`** — a tiny landing page: patients → `fighthealthinsurance.com`,
-  professionals → `fighthealthinsurance.com/pro_version`.
+- **`/`** — a tiny landing page: patients → `fighthealthinsurance.com`;
+  professionals fill out an inline interest form that does a **classic
+  (non-JS) POST** straight to `fighthealthinsurance.com/pro_version_signup`,
+  which records the lead and redirects to its thank-you page. A plain form
+  submission means there's no client-side JavaScript that can fail silently.
 - **Client-side redirect stubs** for every public page of the old pro site
   (generated from [`redirects.json`](redirects.json)).
 - **`404.html`** — the catch-all: any other retired URL (dashboards, appeal

@@ -6,7 +6,7 @@
     <title>Fight Paperwork</title>
     <meta
       name="description"
-      content="Fight Paperwork now works with partner platforms. Patients appeal free on Fight Health Insurance; professionals get started there too."
+      content="Fight Paperwork now works with partner platforms. Patients appeal free on Fight Health Insurance; professionals can tell us about their denials to get started."
     />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -76,6 +76,9 @@
         border-radius: 8px;
         font-weight: 600;
         text-decoration: none;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
       }
       .btn-primary {
         background: #ff9a52;
@@ -84,12 +87,83 @@
       .btn-primary:hover {
         background: #ff8c3a;
       }
-      .btn-outline {
-        border: 2px solid #ff9a52;
-        color: #ff9a52;
+      .pro-card {
+        width: 100%;
+        max-width: 560px;
+        margin-top: 16px;
+        padding: 28px 24px;
+        border: 1px solid #ececec;
+        border-radius: 12px;
+        background: #fff;
+        text-align: left;
       }
-      .btn-outline:hover {
-        background: #fff7ed;
+      .pro-card h2 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+      }
+      .pro-card p.pro-lead {
+        color: #5e5e5e;
+        line-height: 1.55;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+      }
+      .pro-form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .pro-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .pro-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      /* Only side-by-side fields inside a row share width; standalone fields
+         must not pick up the 200px basis as a *height* in the column form. */
+      .pro-row .pro-field {
+        flex: 1 1 200px;
+      }
+      .pro-field label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #3f3f3f;
+      }
+      .pro-field input,
+      .pro-field textarea {
+        font: inherit;
+        padding: 10px 12px;
+        border: 1px solid #d6d6d6;
+        border-radius: 6px;
+        background: #fff;
+        width: 100%;
+      }
+      .pro-field textarea {
+        min-height: 72px;
+        resize: vertical;
+      }
+      /* Honeypot: hidden from humans, off the tab order; bots that fill every
+         field trip it and the server drops the submission. */
+      .hp-field {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      .pro-actions {
+        margin-top: 4px;
+      }
+      .pro-fallback {
+        margin-top: 14px;
+        font-size: 0.85rem;
+        color: #7a7a7a;
+      }
+      .pro-fallback a {
+        color: #ff8c3a;
       }
       footer {
         background: #191919;
@@ -113,17 +187,111 @@
       <p class="sub">
         Fight Paperwork now works through partner platforms, and everything
         lives on Fight Health Insurance. Patients can appeal denials for free;
-        practices, hospitals, and industry teams can get started there too.
+        practices, hospitals, and industry teams can tell us a little about
+        their denials to get started.
       </p>
       <div class="buttons">
         <a class="btn btn-primary" href="https://www.fighthealthinsurance.com/"
           >I&rsquo;m a Patient</a
         >
-        <a
-          class="btn btn-outline"
-          href="https://www.fighthealthinsurance.com/pro_version"
-          >I&rsquo;m a Professional</a
+      </div>
+
+      <div class="pro-card">
+        <h2>I&rsquo;m a Professional</h2>
+        <p class="pro-lead">
+          Providers, revenue-cycle teams, pharma, and appeal specialists: tell
+          us a bit about you and the denials you see most, and we&rsquo;ll be in
+          touch about getting started.
+        </p>
+        <!--
+          Classic (non-JS) form: it POSTs straight to the Fight Health Insurance
+          intake view, which records the lead and redirects to its thank-you
+          page. No fetch()/JS means no silent client-side failures.
+        -->
+        <form
+          class="pro-form"
+          method="post"
+          action="https://www.fighthealthinsurance.com/pro_version_signup"
         >
+          <div class="pro-row">
+            <div class="pro-field">
+              <label for="pro-name">Name</label>
+              <input id="pro-name" name="name" type="text" autocomplete="name" />
+            </div>
+            <div class="pro-field">
+              <label for="pro-title">Job title or provider type</label>
+              <input
+                id="pro-title"
+                name="job_title_or_provider_type"
+                type="text"
+              />
+            </div>
+          </div>
+
+          <div class="pro-row">
+            <div class="pro-field">
+              <label for="pro-email">Email<span aria-hidden="true">*</span></label>
+              <input
+                id="pro-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <div class="pro-field">
+              <label for="pro-phone">Phone number</label>
+              <input
+                id="pro-phone"
+                name="phone_number"
+                type="tel"
+                autocomplete="tel"
+              />
+            </div>
+          </div>
+
+          <div class="pro-field">
+            <label for="pro-business">Business name</label>
+            <input
+              id="pro-business"
+              name="business_name"
+              type="text"
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="pro-field">
+            <label for="pro-denial">Most common denial</label>
+            <textarea id="pro-denial" name="most_common_denial"></textarea>
+          </div>
+
+          <div class="pro-field">
+            <label for="pro-comments">Comments</label>
+            <textarea id="pro-comments" name="comments"></textarea>
+          </div>
+
+          <!-- Honeypot: leave this empty. Real people never see it. -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="pro-website">Website (leave blank)</label>
+            <input
+              id="pro-website"
+              name="website"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="pro-actions">
+            <button class="btn btn-primary" type="submit">Get started</button>
+          </div>
+        </form>
+        <p class="pro-fallback">
+          Prefer the full professional site? Visit
+          <a href="https://www.fighthealthinsurance.com/pro_version"
+            >Fight Health Insurance for professionals</a
+          >.
+        </p>
       </div>
     </main>
 

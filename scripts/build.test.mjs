@@ -52,12 +52,42 @@ test("redirect paths are clean absolute paths without trailing slashes", () => {
   }
 });
 
-test("the landing page links patients and professionals to FHI", () => {
+test("the landing page links patients to FHI", () => {
   const html = readFileSync(join(DIST, "index.html"), "utf8");
   assert.ok(html.includes('href="https://www.fighthealthinsurance.com/"'));
+  // A fallback link to the full professional site remains for anyone who'd
+  // rather not use the inline form.
   assert.ok(
     html.includes('href="https://www.fighthealthinsurance.com/pro_version"'),
   );
+});
+
+test("the professional interest form does a classic POST to the FHI intake", () => {
+  const html = readFileSync(join(DIST, "index.html"), "utf8");
+  // Classic form submission (no JS/fetch) straight to the FHI view.
+  assert.ok(
+    html.includes('method="post"'),
+    "form uses a classic POST submission",
+  );
+  assert.ok(
+    html.includes(
+      'action="https://www.fighthealthinsurance.com/pro_version_signup"',
+    ),
+    "form posts to the FHI interested-professional intake",
+  );
+  // Field names must match the Django form (InterestedProfessional fields).
+  for (const field of [
+    'name="name"',
+    'name="email"',
+    'name="job_title_or_provider_type"',
+    'name="business_name"',
+    'name="phone_number"',
+    'name="most_common_denial"',
+    'name="comments"',
+    'name="website"', // honeypot
+  ]) {
+    assert.ok(html.includes(field), `form is missing ${field}`);
+  }
 });
 
 test("the 404 catch-all forwards to the professional page, query preserved", () => {
