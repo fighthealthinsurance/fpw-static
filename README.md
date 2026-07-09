@@ -52,7 +52,7 @@ npm run build            # generate dist/
 npm run serve            # preview dist/ at http://localhost:3000
 ```
 
-Requires Node 22 (`.nvmrc`). There are no dependencies to install.
+Requires Node 24 (`.nvmrc`). There are no dependencies to install.
 
 ## Deployment
 
