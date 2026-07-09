@@ -60,6 +60,18 @@ Pushes to `main` run [`deploy.yaml`](.github/workflows/deploy.yaml): test →
 build → deploy `dist/` to GitHub Pages. PRs run the same tests via
 [`ci.yaml`](.github/workflows/ci.yaml).
 
+### Vercel (current production)
+
+Until the GitHub Pages cutover below completes, `www.fightpaperwork.com` is
+still served by Vercel. [`vercel.json`](vercel.json) pins the build so Vercel
+serves *this* static shell instead of the retired Next.js app: framework
+detection is disabled, `npm run build` generates `dist/`, and `dist/` is the
+output directory (`cleanUrls`/`trailingSlash` mirror the GitHub Pages semantics
+in [`scripts/serve-out.mjs`](scripts/serve-out.mjs)). Without it, Vercel falls
+back to the project's stale Next.js settings, the build no longer matches the
+repo, and it keeps serving the last old deploy — which is why the professional
+form was still POSTing to the removed `/ziggy/rest/demo_request` endpoint.
+
 ### One-time GitHub Pages setup
 
 1. Repo **Settings → Pages**: set **Source** to "GitHub Actions" (the deploy
